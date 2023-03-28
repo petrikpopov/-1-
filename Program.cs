@@ -102,7 +102,14 @@ namespace Flyweight_28._03._2023
                 {
                     return keys[key];
                 }
-
+                if (keys.ContainsKey(key)==null)
+                {
+                    keys.Add("Pehota", new Pehota());
+                    keys.Add("Auto", new Auto_Car());
+                    keys.Add("Тяжелая техника", new Heavy_ground_combat_equipment());
+                    keys.Add("Легкая техника", new Light_ground_combat_equipment());
+                    keys.Add("Авиация", new Aircraft());
+                }
                 return null;
             }
         }
