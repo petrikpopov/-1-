@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using System.Linq;
 namespace Flyweight_28._03._2023
 {
     class Program
@@ -82,24 +83,45 @@ namespace Flyweight_28._03._2023
                 Console.WriteLine($"Picture_display_Pehota:{Picture_display}\nMovement_speed_Pehota:{Movement_speed}\nForce_factor_Pehota:{Force_factor}\n");
             }
         }
+        public class FlyweightFactory
+        {
+            
+            Dictionary<string, Combat_Unit> keys = new Dictionary<string, Combat_Unit>();
+
+            public FlyweightFactory()
+            {
+                keys.Add("Pehota", new Pehota());
+                keys.Add("Auto",new Auto_Car());
+                keys.Add("Тяжелая техника", new Heavy_ground_combat_equipment());
+                keys.Add("Легкая техника",new Light_ground_combat_equipment());
+                keys.Add("Авиация",new Aircraft());
+            }
+            public Combat_Unit GetCombat_Unit(string key)
+            {
+                if (!keys.ContainsKey(key))
+                {
+                    return keys[key];
+                }
+
+                return null;
+            }
+        }
         static void Main(string[] args)
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Combat_Unit combat_Unit = new Pehota();
-            combat_Unit.Show(4.4,1.4);
-            /////////////////////////
-            combat_Unit = new Auto_Car();
-            combat_Unit.Show(3.1,9.3);
-            /////////////////////////
-            combat_Unit = new Heavy_ground_combat_equipment();
-            combat_Unit.Show(4.3,1.3);
-            /////////////////////////
-            combat_Unit = new Light_ground_combat_equipment();
-            combat_Unit.Show(6.5,5.5);
-            /////////////////////////
-            combat_Unit = new Aircraft();
-            combat_Unit.Show(9.4, 2.6);
-            /////////////////////////
+
+            FlyweightFactory flyweightFactory = new FlyweightFactory();
+            Combat_Unit combat_Unit = flyweightFactory.GetCombat_Unit("Pehota");
+            combat_Unit.Show(6.4, 5.6);
+            Combat_Unit combat_Unit1 = flyweightFactory.GetCombat_Unit("Auto");
+            combat_Unit1.Show(4.3,5.5);
+            Combat_Unit combat_Unit2 = flyweightFactory.GetCombat_Unit("Тяжелая техника");
+            combat_Unit2.Show(1.2,1.4);
+            Combat_Unit combat_Unit3 = flyweightFactory.GetCombat_Unit("Легкая техника");
+            combat_Unit3.Show(2.4,5);
+            Combat_Unit combat_Unit4 = flyweightFactory.GetCombat_Unit("Авиация");
+            combat_Unit4.Show(4,6.7);
+            
 
         }
     }
